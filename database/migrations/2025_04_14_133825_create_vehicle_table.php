@@ -3,12 +3,15 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-class CreateVehiclesTable extends Migration
+class CreateVehicleTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::create('vehicle', function (Blueprint $table) {
             $table->id();
             $table->string('brand', 100);
             $table->string('model', 100);
@@ -22,10 +25,16 @@ class CreateVehiclesTable extends Migration
             $table->enum('transmission', ['automatique', 'manuelle']);
             $table->foreignId('vehicle_type_id')->nullable()->constrained('vehicle_types')->nullOnDelete();
         });
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('vehicles');
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::dropIfExists('vehicle');
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 }

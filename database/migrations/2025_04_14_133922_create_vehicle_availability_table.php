@@ -3,22 +3,31 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-class CreateVehicleAvailabilitiesTable extends Migration
+class CreateVehicleAvailabilityTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('vehicle_availabilities', function (Blueprint $table) {
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::create('vehicle_availability', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_available')->default(true);
         });
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('vehicle_availabilities');
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::dropIfExists('vehicle_availability');
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 }

@@ -3,12 +3,15 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
-class CreateReservationsTable extends Migration
+class CreateReservationTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('reservations', function (Blueprint $table) {
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::create('reservation', function (Blueprint $table) {
             $table->id();
             $table->string('email');
             $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
@@ -17,10 +20,16 @@ class CreateReservationsTable extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->decimal('total_price', 10, 2);
         });
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('reservations');
+        DB::statement('SET foreign_key_checks = 0;');
+
+        Schema::dropIfExists('reservation');
+
+        DB::statement('SET foreign_key_checks = 1;');
     }
 }
