@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    protected $table = 'vehicule';
+    protected $table = 'vehicle';
 
     protected $fillable = [
         'brand', 'model', 'year', 'price_per_day', 'doors',
@@ -14,10 +14,11 @@ class Vehicle extends Model
         'transmission', 'vehicle_type_id'
     ];
 
-    public function vehicleType()
+    public function type()
     {
-        return $this->belongsTo(VehicleType::class);
+        return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
     }
+
 
     public function photo()
     {
