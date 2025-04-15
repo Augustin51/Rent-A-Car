@@ -8,7 +8,6 @@
 </head>
 <body class="bg-white text-gray-900">
 
-<!-- Header -->
 <header class="flex justify-between items-center px-6 py-4 shadow-md">
     <div class="text-xl font-bold">🚗 Car Rental</div>
     <nav class="space-x-4">
@@ -20,7 +19,6 @@
     </div>
 </header>
 
-<!-- Hero Section -->
 <section class="bg-purple-600 text-white py-16 px-8 relative">
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
@@ -40,7 +38,6 @@
     </div>
 </section>
 
-<!-- Features -->
 <section class="max-w-6xl mx-auto py-16 px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
     <div>
         <div class="text-3xl mb-2">📅</div>
@@ -59,12 +56,11 @@
     </div>
 </section>
 
-<!-- Vehicle List -->
 <section class="bg-gray-100 py-16 px-8">
     <div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold">Choose the car that suits you</h2>
-            <a href="#" class="text-purple-600 font-medium">View All →</a>
+            <a href="/vehicles" class="text-purple-600 font-medium">View All →</a>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -88,7 +84,6 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer class="bg-white border-t py-6 px-8 text-sm text-gray-600">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between">
         <div>🚗 Car Rental</div>
