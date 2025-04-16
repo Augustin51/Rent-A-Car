@@ -26,9 +26,8 @@ class VehicleController extends Controller
 
     public function getType(): false|string
     {
-        var_dump('df');
         $data = json_decode(file_get_contents('php://input'));
-
+        var_dump($data->type);
         return json_encode(['success' => true, 'type' => $data->type]);
     }
 }

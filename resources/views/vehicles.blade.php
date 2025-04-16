@@ -26,23 +26,23 @@
     <h2 class="text-2xl font-semibold text-center mb-6">Select a vehicle group</h2>
 
     <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <button class="bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Vehicles</button>
+        <button data-type="" class="type border bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Vehicles</button>
         @foreach($types as $type)
             <button data-type="{{ $type->name }}" class="type border text-sm px-4 py-2 rounded-full">{{ $type->name }}</button>
         @endforeach
     </div>
 
     <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <button class="bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Energy type</button>
+        <button data-fuelType="" class="fuel-type border bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Energy type</button>
         @foreach($fuelTypes as $fuelType)
-            <button data-type="{{ $fuelType }}" class="fuel-type border text-sm px-4 py-2 rounded-full">{{ $fuelType }}</button>
+            <button data-fueltype="{{ $fuelType }}" class="fuel-type border text-sm px-4 py-2 rounded-full">{{ $fuelType }}</button>
         @endforeach
     </div>
 
     <div class="flex flex-wrap justify-center gap-3 mb-8">
-        <button class="bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Type of gear</button>
+        <button data-transmission="" class="transmission border bg-purple-600 text-white text-sm px-4 py-2 rounded-full">All Type of gear</button>
         @foreach($transmissions as $transmission)
-            <button data-type="{{ $transmission }}" class="transmission border text-sm px-4 py-2 rounded-full">{{ $transmission }}</button>
+            <button data-transmission="{{ $transmission }}" class="transmission border text-sm px-4 py-2 rounded-full">{{ $transmission }}</button>
         @endforeach
     </div>
 

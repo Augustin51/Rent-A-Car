@@ -1,6 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\VehicleController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VehicleController;
 
-Route::post('/vehicles/type', [VehicleController::class, 'getType']);
+Route::post('/vehicles/filter', [VehicleController::class, 'index']);
