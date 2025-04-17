@@ -10,16 +10,16 @@
 <body class="bg-white text-gray-900">
 
 <header class="flex justify-between items-center px-8 py-4 shadow-md bg-white">
-    <div class="flex items-center space-x-2">
+    <a href="/" class="flex items-center space-x-2">
         <i class="fas fa-car text-2xl text-black"></i>
         <span class="font-semibold text-sm text-black">Car Rental</span>
-    </div>
+    </a>
 
     <nav class="hidden md:flex space-x-6">
-        <a href="#" class="text-sm font-normal text-gray-800 hover:text-black">Home</a>
-        <a href="#" class="text-sm font-bold text-black">Vehicles</a>
-        <a href="#" class="text-sm font-normal text-gray-800 hover:text-black">Details</a>
-        <a href="#" class="text-sm font-normal text-gray-800 hover:text-black">About Us</a>
+        <a href="/" class="text-sm font-normal text-gray-800 hover:text-black">Home</a>
+        <a href="/vehicles" class="text-sm font-bold text-black">Vehicles</a>
+        <a href="/vehicles" class="text-sm font-normal text-gray-800 hover:text-black">Details</a>
+        <a href="/vehicles" class="text-sm font-normal text-gray-800 hover:text-black">Reservation</a>
     </nav>
 
     <div class="flex items-center space-x-2">
