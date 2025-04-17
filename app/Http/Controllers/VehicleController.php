@@ -24,10 +24,15 @@ class VehicleController extends Controller
         return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions'));
     }
 
-    public function getType(): false|string
-    {
-        $data = json_decode(file_get_contents('php://input'));
-        var_dump($data->type);
-        return json_encode(['success' => true, 'type' => $data->type]);
+    public function showOne($id) {
+        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
+
+        $vehicles = Vehicle::with(['type', 'equipment', 'photo'])
+            ->where('id', '!=', $id)
+            ->inRandomOrder()
+            ->take(6)
+            ->get();
+
+        return view('vehicle-detail', compact('vehicle', 'vehicles'));
     }
 }
