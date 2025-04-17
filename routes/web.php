@@ -6,3 +6,4 @@ use App\Http\Controllers\VehicleController;
 Route::get('/', [VehicleController::class, 'index']);
 Route::get('/vehicles', [VehicleController::class, 'showAll']);
 Route::get('/vehicle/{id}', [VehicleController::class, 'showOne']);
+Route::get('/rent/{id}', [VehicleController::class, 'rent']);

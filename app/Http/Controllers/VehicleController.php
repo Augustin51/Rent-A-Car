@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Vehicle;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 
-class VehicleController extends Controller
+class VehicleController
 {
     public function index()
     {
@@ -34,5 +35,15 @@ class VehicleController extends Controller
             ->get();
 
         return view('vehicle-detail', compact('vehicle', 'vehicles'));
+    }
+
+    public function rent($id) {
+        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
+        /*$reservations = Reservation::with(['start_date', 'end_date'])
+            ->where('vehicle_id', $id)
+            ->get();*/
+
+
+        return view('rent-vehicle', compact('vehicle'));
     }
 }
