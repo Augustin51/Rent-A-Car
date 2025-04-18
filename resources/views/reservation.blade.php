@@ -70,7 +70,7 @@
                 <h2 class="text-2xl font-bold mb-2">Looking for a car?</h2>
                 <p class="text-lg font-semibold mb-1">+537 547-6401</p>
                 <p class="text-sm mb-4 max-w-md">Armet amet duo sea lorem. Rebum ipsum amet lorem sit kasd est dolor ipsum duo ipsum.</p>
-                <button class="bg-orange-400 hover:bg-orange-500 px-5 py-2 rounded-lg shadow">Book now</button>
+                <a href="/" class="bg-orange-400 hover:bg-orange-500 px-5 py-2 rounded-lg shadow">Book now</a>
             </div>
             <div class="flex justify-end">
                 <img src="{{ asset('images/carHome.png') }}" class="" alt="Car">

@@ -16,12 +16,24 @@
         <span class="font-semibold text-sm text-black">RentACar</span>
     </a>
 
+    @php
+        $links = [
+            ['label' => 'Home', 'url' => '/', 'page' => '/'],
+            ['label' => 'Vehicles', 'url' => '/vehicles', 'page' => '/vehicles'],
+            ['label' => 'Details', 'url' => isset($id) ? "/vehicle/$id" : '/vehicles', 'page' => '/vehicle'],
+            ['label' => 'Reservation', 'url' => isset($id) ? "/reservation/$id" : '/vehicles', 'page' => '/reservation'],
+        ];
+    @endphp
+
     <nav class="hidden md:flex space-x-6">
-        <a href="/" class="text-sm font-bold text-black">Home</a>
-        <a href="/vehicles" class="text-sm font-normal text-gray-800 hover:text-black">Vehicles</a>
-        <a href="/vehicles" class="text-sm font-normal text-gray-800 hover:text-black">Details</a>
-        <a href="/vehicles" class="text-sm font-normal text-gray-800 hover:text-black">Reservation</a>
+        @foreach($links as $link)
+            <a href="{{ $link['url'] }}"
+               class="text-sm {{ $currentPage === $link['page'] ? 'font-bold text-black' : 'font-normal text-gray-800 hover:text-black' }}">
+                {{ $link['label'] }}
+            </a>
+        @endforeach
     </nav>
+
 
     <div class="flex items-center space-x-2">
         <div class="flex items-center justify-center w-8 h-8 rounded-full bg-indigo-600 text-white">

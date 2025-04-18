@@ -19,7 +19,9 @@ class VehicleController
         $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
         $transmissions = Vehicle::select('transmission')->distinct()->pluck('transmission');
 
-        return view('homePage', compact('vehicles', 'types', 'fuelTypes', 'transmissions'));
+        $currentPage = "/";
+
+        return view('homePage', compact('vehicles', 'types', 'fuelTypes', 'transmissions', 'currentPage'));
     }
 
     public function showAll(Request $request)
@@ -58,7 +60,9 @@ class VehicleController
         $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
         $transmissions = Vehicle::select('transmission')->distinct()->pluck('transmission');
 
-        return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions', 'typeSelect', 'fuelTypeSelect', 'transmissionSelect'));
+        $currentPage = "/vehicles";
+
+        return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions', 'typeSelect', 'fuelTypeSelect', 'transmissionSelect', 'currentPage'));
     }
 
 
@@ -74,13 +78,17 @@ class VehicleController
             ->take(6)
             ->get();
 
-        return view('vehicle-detail', compact('vehicle', 'vehicles'));
+        $currentPage = "/vehicle";
+
+        return view('vehicle-detail', compact('vehicle', 'vehicles', 'id', 'currentPage'));
     }
 
     public function reservation($id) {
         $vehicle = Vehicle::with(['type', 'equipment', 'photo'])
         ->find($id);
 
-        return view('reservation', compact('vehicle'));
+        $currentPage = "/reservation";
+
+        return view('reservation', compact('vehicle', 'id', 'currentPage'));
     }
 }
