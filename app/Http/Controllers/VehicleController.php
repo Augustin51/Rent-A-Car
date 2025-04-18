@@ -66,9 +66,9 @@ class VehicleController
         return view('vehicle-detail', compact('vehicle', 'vehicles'));
     }
 
-    public function rent($id) {
+    public function reservation($id) {
         $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
 
-        return view('rent-vehicle', compact('vehicle'));
+        return view('reservation', compact('vehicle'));
     }
 }

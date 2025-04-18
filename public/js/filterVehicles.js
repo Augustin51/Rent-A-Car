@@ -9,7 +9,7 @@ let transmissionValue = "";
 
 
 function generateVehicleCard(vehicle) {
-
+    console.log(vehicle)
     const equipmentList = vehicle.equipment.map(e => e.name).join(', ');
 
     return `
@@ -26,7 +26,7 @@ function generateVehicleCard(vehicle) {
             <div class="text-sm text-gray-500 mb-4">
                 ${equipmentList}
             </div>
-            <a href="#" class="w-full inline-block text-center bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
+            <a href="/reservation/${vehicle.id}" class="w-full inline-block text-center bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
                 View Details
             </a>
         </div>
@@ -50,7 +50,7 @@ function requeteAjax() {
             .then(response => response.json())
             .then(data => {
                 if (data.success && Array.isArray(data.vehicles)) {
-                    vehiclesContainer.innerHTML = ""; // On vide avant d'ajouter les nouveaux
+                    vehiclesContainer.innerHTML = "";
                     data.vehicles.forEach(vehicle => {
                         vehiclesContainer.innerHTML += generateVehicleCard(vehicle);
                     });
@@ -58,8 +58,7 @@ function requeteAjax() {
                     vehiclesContainer.innerHTML = "<p class='text-center col-span-3'>No vehicles found.</p>";
                 }
             })
-            .catch(error => console.error("Erreur lors de la requête :", error));
-
+            .catch(error => console.error("Erreur :", error));
     } catch (e) {
         console.error("Erreur :", e);
     }

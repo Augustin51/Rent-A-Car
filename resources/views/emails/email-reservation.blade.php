@@ -1,13 +1,13 @@
 {{-- resources/views/emails/reservation.blade.php --}}
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Reservation Confirmation</title>
 </head>
 <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-<h2 style="color: #2c3e50;">Your Reservation is Confirmed 🚗</h2>
+<h2 style="color: #2c3e50;">Your Reservation is Confirmed</h2>
 
 <p>Hello,</p>
 
