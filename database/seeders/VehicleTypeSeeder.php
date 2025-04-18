@@ -15,7 +15,7 @@ class VehicleTypeSeeder extends Seeder
             ['name' => 'suv'],
             ['name' => 'crossover'],
             ['name' => 'pickup'],
-            ['name' => 'cabriolet'],
+            ['name' => 'convertible'],
         ]);
     }
 }

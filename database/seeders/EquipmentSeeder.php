@@ -12,9 +12,9 @@ class EquipmentSeeder extends Seeder
         DB::table('equipment')->insert([
             ['name' => 'GPS'],
             ['name' => 'Bluetooth'],
-            ['name' => 'Sièges chauffants'],
-            ['name' => 'Caméra de recul'],
-            ['name' => 'Toit ouvrant'],
+            ['name' => 'Heated seats'],
+            ['name' => 'Rearview camera'],
+            ['name' => 'Sunroof'],
         ]);
     }
 }

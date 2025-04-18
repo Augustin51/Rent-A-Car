@@ -87,7 +87,7 @@
                         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
                             <i class="fas fa-snowflake text-lg mb-2 block"></i>
                             <strong class="block text-sm">Air Conditioner</strong>
-                            <span>Yes</span>
+                            <span>{{ $vehicle->air_conditioning ? 'Yes' : 'No' }}</span>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
                             <i class="fas fa-users text-lg mb-2 block"></i>
@@ -149,10 +149,12 @@
                                 <i class="fa-solid fa-gas-pump"></i>
                                 <span>{{ ucfirst($v->fuel_type) }}</span>
                             </div>
-                            <div class="flex items-center gap-1">
-                                <i class="fa-solid fa-snowflake"></i>
-                                <span>Air Conditioner</span>
-                            </div>
+                            @if($v->air_conditioning == '1')
+                                <div class="flex items-center gap-1">
+                                    <i class="fa-solid fa-snowflake"></i>
+                                    <span>Air Conditioner</span>
+                                </div>
+                            @endif
                         </div>
 
                         <a href="/vehicle/{{ $v->id }}"

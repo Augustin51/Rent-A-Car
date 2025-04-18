@@ -161,10 +161,12 @@
                                 <i class="fa-solid fa-gas-pump"></i>
                                 <span>{{ ucfirst($vehicle->fuel_type) }}</span>
                             </div>
-                            <div class="flex items-center gap-1">
-                                <i class="fa-solid fa-snowflake"></i>
-                                <span>Air Conditioner</span>
-                            </div>
+                            @if($vehicle->air_conditioning == '1')
+                                <div class="flex items-center gap-1">
+                                    <i class="fa-solid fa-snowflake"></i>
+                                    <span>Air Conditioner</span>
+                                </div>
+                            @endif
                         </div>
 
                         <a href="/vehicle/{{ $vehicle->id }}"

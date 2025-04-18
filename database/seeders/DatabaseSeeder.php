@@ -21,11 +21,9 @@ class DatabaseSeeder extends Seeder
             VehicleSeeder::class,
             VehicleTypeSeeder::class,
             EquipmentSeeder::class,
-            VehicleSeeder::class,
             VehiclePhotoSeeder::class,
             VehicleEquipmentSeeder::class,
             ReservationSeeder::class,
-            VehicleAvailabilitySeeder::class,
         ]);
 
         DB::statement('SET foreign_key_checks = 1;');

@@ -17,12 +17,11 @@ class CreateVehicleTable extends Migration
             $table->string('model', 100);
             $table->integer('year');
             $table->decimal('price_per_day', 10, 2);
-            $table->string('image_url', 255)->nullable();
             $table->integer('doors')->nullable();
-            $table->enum('fuel_type', ['essence', 'diesel', 'électrique', 'hybride']);
+            $table->enum('fuel_type', ['gasoline', 'diesel', 'electric', 'hybrid']);
             $table->boolean('air_conditioning')->default(false);
             $table->integer('seats')->nullable();
-            $table->enum('transmission', ['automatique', 'manuelle']);
+            $table->enum('transmission', ['automatic', 'manual']);
             $table->foreignId('vehicle_type_id')->nullable()->constrained('vehicle_types')->nullOnDelete();
         });
 

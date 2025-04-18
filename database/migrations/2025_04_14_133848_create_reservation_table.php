@@ -17,8 +17,9 @@ class CreateReservationTable extends Migration
             $table->foreignId('vehicle_id')->constrained('vehicles')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
-            $table->timestamp('created_at')->useCurrent();
             $table->decimal('total_price', 10, 2);
+            $table->timestamp('created_at')->useCurrent();
+
         });
 
         DB::statement('SET foreign_key_checks = 1;');
