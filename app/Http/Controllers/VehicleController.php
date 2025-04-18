@@ -12,17 +12,46 @@ class VehicleController
     public function index()
     {
         $vehicles = Vehicle::with(['type', 'equipment', 'photo'])->take(6)->get();
-        return view('homePage', compact('vehicles'));
-    }
 
-    public function showAll() {
-        $vehicles = Vehicle::with(['type', 'equipment', 'photo'])->get();
         $types = VehicleType::all();
         $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
         $transmissions = Vehicle::select('transmission')->distinct()->pluck('transmission');
 
+        return view('homePage', compact('vehicles', 'types', 'fuelTypes', 'transmissions'));
+    }
 
-        return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions'));
+    public function showAll(Request $request)
+    {
+        $typeSelect = 'all';
+        $fuelTypeSelect = 'all';
+        $transmissionSelect = 'all';
+
+        if ($request->isMethod('post')) {
+            $typeSelect = $request["type"];
+            $fuelTypeSelect = $request["fuel_type"];
+            $transmissionSelect = $request["transmission"];
+
+            $vehicles = Vehicle::with(['type', 'equipment', 'photo'])
+                ->when($typeSelect != 'all', function ($query) use ($typeSelect) {
+                    $query->whereHas('type', function ($subQuery) use ($typeSelect) {
+                        $subQuery->where('name', $typeSelect);
+                    });
+                })
+                ->when($fuelTypeSelect != 'all', function ($query) use ($fuelTypeSelect) {
+                    $query->where('fuel_type', $fuelTypeSelect);
+                })
+                ->when($transmissionSelect != 'all', function ($query) use ($transmissionSelect) {
+                    $query->whereIn('transmission', (array) $transmissionSelect);
+                })
+                ->get();
+        }  else {
+            $vehicles = Vehicle::with(['type', 'equipment', 'photo'])->get();
+        }
+        $types = VehicleType::all();
+        $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
+        $transmissions = Vehicle::select('transmission')->distinct()->pluck('transmission');
+
+        return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions', 'typeSelect', 'fuelTypeSelect', 'transmissionSelect'));
     }
 
     public function showOne($id) {
@@ -39,10 +68,6 @@ class VehicleController
 
     public function rent($id) {
         $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
-        /*$reservations = Reservation::with(['start_date', 'end_date'])
-            ->where('vehicle_id', $id)
-            ->get();*/
-
 
         return view('rent-vehicle', compact('vehicle'));
     }

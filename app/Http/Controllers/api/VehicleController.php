@@ -115,7 +115,7 @@ class VehicleController
 
             return response()->json([
                 'success' => true,
-                'messageUser' => 'The reservation has been successfully created.'
+                'messageUser' => 'You reservation is confirmed'
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

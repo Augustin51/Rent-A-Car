@@ -65,25 +65,62 @@ function requeteAjax() {
     }
 }
 
+function selectType(clickedButton) {
+    types.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
+    clickedButton.classList.add('bg-purple-600', 'text-white');
+    typeValue = clickedButton.dataset.type;
+}
+
+function selectFuelType(clickedButton) {
+    fuelTypes.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
+    clickedButton.classList.add('bg-purple-600', 'text-white');
+    fuelTypeValue = clickedButton.dataset.fueltype;
+}
+
+function selectTransmission(clickedButton) {
+    transmissions.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
+    clickedButton.classList.add('bg-purple-600', 'text-white');
+    transmissionValue = clickedButton.dataset.transmission;
+}
 
 
-types.forEach(type => type.addEventListener('click', (e) => {
-    types.forEach(type2 => type2.classList.remove('bg-purple-600', 'text-white'));
-    type.classList.add('bg-purple-600', 'text-white');
-    typeValue = e.target.dataset.type;
-    requeteAjax()
+types.forEach(type => type.addEventListener('click', () => {
+    selectType(type);
+    requeteAjax();
 }));
-fuelTypes.forEach(fuelType => fuelType.addEventListener('click', (e) => {
-    fuelTypes.forEach(fuelType2 => fuelType2.classList.remove('bg-purple-600', 'text-white'));
-    fuelType.classList.add('bg-purple-600', 'text-white');
-    fuelTypeValue = e.target.dataset.fueltype;
-    requeteAjax()
+fuelTypes.forEach(fuelType => fuelType.addEventListener('click', () => {
+    selectFuelType(fuelType);
+    requeteAjax();
 }));
-transmissions.forEach(transmission => transmission.addEventListener('click', (e) => {
-    transmissions.forEach(transmission2 => transmission2.classList.remove('bg-purple-600', 'text-white'));
-    transmission.classList.add('bg-purple-600', 'text-white');
-    transmissionValue = e.target.dataset.transmission;
-    requeteAjax()
+transmissions.forEach(transmission => transmission.addEventListener('click', () => {
+    selectTransmission(transmission);
+    requeteAjax();
 }));
 
+// if filter already select from homePage
+const typeSelect = document.querySelector('#typeSelect').dataset.typeselect;
+const fuelTypeSelect = document.querySelector('#fuelTypeSelect').dataset.fueltypeselect;
+const transmissionSelect = document.querySelector('#transmissionSelect').dataset.transmissionselect;
+
+if (typeSelect !== 'all') {
+    types.forEach(btn => {
+        if (btn.dataset.type === typeSelect) {
+            selectType(btn);
+        }
+    });
+}
+if (fuelTypeSelect !== 'all') {
+    fuelTypes.forEach(btn => {
+        if (btn.dataset.fueltype === fuelTypeSelect) {
+            selectFuelType(btn);
+        }
+    });
+}
+if (transmissionSelect !== 'all') {
+    transmissions.forEach(btn => {
+        if (btn.dataset.transmission === transmissionSelect) {
+            selectTransmission(btn);
+        }
+    });
+}
 

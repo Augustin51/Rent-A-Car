@@ -54,29 +54,36 @@
 
             <div class="bg-white text-black p-6 rounded-xl shadow-md w-full max-w-md mx-auto">
                 <h3 class="text-lg font-semibold mb-4 text-center">Book your car</h3>
-                <form class="space-y-4">
-                    <select class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option selected disabled>Vehicle type</option>
-                        <option>SUV</option>
-                        <option>Sedan</option>
-                        <option>Convertible</option>
+                <form action="/vehicles" method="post" class="space-y-4">
+                    @csrf
+
+                    <select name="type" class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Vehicle type</option>
+                        @foreach($types as $type)
+                            <option value="{{ $type->name }}">{{ $type->name }}</option>
+                        @endforeach
                     </select>
-                    <select class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option selected disabled>Energy Type</option>
-                        <option>Gasoline</option>
-                        <option>Diesel</option>
-                        <option>Electric</option>
+
+                    <select name="fuel_type" class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Energy Type</option>
+                        @foreach($fuelTypes as $fuelType)
+                            <option value="{{ $fuelType }}">{{ $fuelType }}</option>
+                        @endforeach
                     </select>
-                    <select class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <option selected disabled>Type of gear</option>
-                        <option>Manual</option>
-                        <option>Automatic</option>
+
+                    <select name="transmission" class="w-full border rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Type of gear</option>
+                        @foreach($transmissions as $transmission)
+                            <option value="{{ $transmission }}">{{ $transmission }}</option>
+                        @endforeach
                     </select>
+
                     <button type="submit"
                             class="w-full bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 rounded-md transition">
                         Book now
                     </button>
                 </form>
+
             </div>
         </div>
 

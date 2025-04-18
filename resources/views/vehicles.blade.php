@@ -1,3 +1,8 @@
+@php
+    echo '<div data-typeselect="' . $typeSelect . '" id="typeSelect" class="hidden"></div>';
+    echo '<div data-fueltypeselect="' . $fuelTypeSelect . '" id="fuelTypeSelect" class="hidden"></div>';
+    echo '<div data-transmissionselect="' . $transmissionSelect . '" id="transmissionSelect" class="hidden"></div>';
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
