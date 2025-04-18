@@ -35,7 +35,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($vehicles as $vehicle)
             <div class="bg-white rounded-2xl shadow p-4 flex flex-col">
-                <img src="{{ asset(optional($vehicle->photos)->first()->image_url ?? 'images/placeholderVehicle.png') }}"
+                <img src="{{ asset(optional($vehicle->photo)->first()->image_url ?? 'images/placeholderVehicle.png') }}"
                      alt="Car Image"
                      class="rounded-md mb-4 h-40 w-full object-cover">
 

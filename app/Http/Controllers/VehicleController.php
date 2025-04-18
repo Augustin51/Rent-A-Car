@@ -11,7 +11,9 @@ class VehicleController
 {
     public function index()
     {
-        $vehicles = Vehicle::with(['type', 'equipment', 'photo'])->take(6)->get();
+        $vehicles = Vehicle::with(['type', 'equipment', 'photo' => function ($query) {
+            $query->where('display_order', 0);
+        }])->take(6)->get();
 
         $types = VehicleType::all();
         $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
@@ -27,11 +29,13 @@ class VehicleController
         $transmissionSelect = 'all';
 
         if ($request->isMethod('post')) {
-            $typeSelect = $request["type"];
-            $fuelTypeSelect = $request["fuel_type"];
-            $transmissionSelect = $request["transmission"];
+            $typeSelect = $request->input('type', 'all');
+            $fuelTypeSelect = $request->input('fuel_type', 'all');
+            $transmissionSelect = $request->input('transmission', 'all');
 
-            $vehicles = Vehicle::with(['type', 'equipment', 'photo'])
+            $vehicles = Vehicle::with(['type', 'equipment', 'photo' => function ($query) {
+                $query->where('display_order', 0);
+            }])
                 ->when($typeSelect != 'all', function ($query) use ($typeSelect) {
                     $query->whereHas('type', function ($subQuery) use ($typeSelect) {
                         $subQuery->where('name', $typeSelect);
@@ -44,9 +48,12 @@ class VehicleController
                     $query->whereIn('transmission', (array) $transmissionSelect);
                 })
                 ->get();
-        }  else {
-            $vehicles = Vehicle::with(['type', 'equipment', 'photo'])->get();
+        } else {
+            $vehicles = Vehicle::with(['type', 'equipment', 'photo' => function ($query) {
+                $query->where('display_order', 0);
+            }])->get();
         }
+
         $types = VehicleType::all();
         $fuelTypes = Vehicle::select('fuel_type')->distinct()->pluck('fuel_type');
         $transmissions = Vehicle::select('transmission')->distinct()->pluck('transmission');
@@ -54,10 +61,14 @@ class VehicleController
         return view('vehicles', compact('vehicles', 'types', 'fuelTypes', 'transmissions', 'typeSelect', 'fuelTypeSelect', 'transmissionSelect'));
     }
 
-    public function showOne($id) {
-        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
 
-        $vehicles = Vehicle::with(['type', 'equipment', 'photo'])
+    public function showOne($id) {
+        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])
+        ->find($id);
+
+        $vehicles = Vehicle::with(['type', 'equipment', 'photo' => function ($query) {
+            $query->where('display_order', 0);
+        }])
             ->where('id', '!=', $id)
             ->inRandomOrder()
             ->take(6)

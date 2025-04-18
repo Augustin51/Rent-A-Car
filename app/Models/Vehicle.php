@@ -19,10 +19,9 @@ class Vehicle extends Model
         return $this->belongsTo(VehicleType::class, 'vehicle_type_id');
     }
 
-
     public function photo()
     {
-        return $this->hasMany(VehiclePhoto::class);
+        return $this->hasMany(VehiclePhoto::class, 'vehicle_id');
     }
 
     public function equipment()

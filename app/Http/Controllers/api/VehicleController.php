@@ -13,14 +13,17 @@ use App\Mail\ReservationConfirmed;
 
 class VehicleController
 {
-    public function index() {
+    public function index()
+    {
         $data = json_decode(file_get_contents('php://input'));
 
         $type = $data->type;
         $fuelType = $data->fuelType;
         $transmission = $data->transmission;
 
-        $vehicles = Vehicle::with(['type', 'equipment', 'photo'])
+        $vehicles = Vehicle::with(['type', 'equipment', 'photo' => function ($query) {
+            $query->where('display_order', 0);
+        }])
             ->when(!empty($type), function ($query) use ($type) {
                 $query->whereHas('type', function ($subQuery) use ($type) {
                     $subQuery->where('name', $type);
@@ -33,6 +36,11 @@ class VehicleController
                 $query->whereIn('transmission', (array) $transmission);
             })
             ->get();
+
+        $vehicles = $vehicles->map(function ($vehicle) {
+            $vehicle->photo = $vehicle->photo->isNotEmpty() ? $vehicle->photo : null;
+            return $vehicle;
+        });
 
         return response()->json([
             'success' => true,
@@ -122,7 +130,7 @@ class VehicleController
 
             return response()->json([
                 'success' => true,
-                'messageUser' => 'You reservation is confirmed'
+                'messageUser' => 'Your reservation is confirmed! We’ve sent you a recap by email.'
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

@@ -19,14 +19,13 @@
                         $photoUrl = $exists ? $photoPath : 'images/placeholderVehicle.png';
                     @endphp
 
-                    <img src="{{ asset($photoUrl) }}" alt="Car Image" class="rounded-md mb-4 h-40 w-full object-cover">
+                    <img src="{{ asset($photoUrl) }}" alt="{{ $vehicle->brand }}" class="rounded-md mb-4 h-64 w-full object-cover">
 
-
-                    <div class="flex gap-3 mt-4">
+                    <div class="grid grid-cols-4 gap-3 mt-4">
                         @foreach($vehicle->photo as $photo)
-                            <img src="/storage/{{ $photo->image_url }}"
-                                 alt="Vehicle Photo"
-                                 class="w-20 h-20 rounded-md object-cover ring-1 ring-gray-200 hover:ring-purple-500">
+                            <img src="{{ asset($photo->image_url) }}"
+                                 alt="{{ $vehicle->brand }}"
+                                 class="w-full h-24 rounded-md object-cover ring-1 ring-gray-200 hover:ring-purple-500">
                         @endforeach
                     </div>
                 </div>
@@ -96,7 +95,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($vehicles as $v)
                     <div class="bg-white rounded-2xl shadow p-4 flex flex-col">
-                        <img src="{{ asset(optional($v->photos)->first()->image_url ?? 'images/placeholderVehicle.png') }}"
+                        <img src="{{ asset(optional($v->photo)->first()->image_url ?? 'images/placeholderVehicle.png') }}"
                              alt="Car Image"
                              class="rounded-md mb-4 h-40 w-full object-cover">
 

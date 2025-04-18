@@ -7,15 +7,14 @@ let typeValue = "";
 let fuelTypeValue = "";
 let transmissionValue = "";
 
-
 function generateVehicleCard(vehicle) {
-    console.log(vehicle)
+    console.log(vehicle);
     const equipmentList = vehicle.equipment.map(e => e.name).join(', ');
+    const vehicleImage = vehicle.photo[0].image_url;
 
     return `
         <div class="bg-white rounded-xl shadow p-4">
-            <img src="/images/${vehicle.photo[0].image_url}" alt="Car Image" class="rounded-md mb-4 h-40 w-full object-cover" onerror="this.onerror=null; this.src='/images/placeholderVehicle.png';">
-
+            <img src="${vehicleImage}" alt="Car Image" class="rounded-md mb-4 h-40 w-full object-cover" onerror="this.onerror=null; this.src='/images/placeholderVehicle.png';">
             <div class="flex justify-between items-center mb-2">
                 <h3 class="text-lg font-semibold">${vehicle.brand}</h3>
                 <span class="text-purple-600 font-bold">$${vehicle.price_per_day}</span>
@@ -32,36 +31,34 @@ function generateVehicleCard(vehicle) {
         </div>
     `;
 }
-
 function requeteAjax() {
-    try {
-        fetch("/api/vehicles/filter", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                type: typeValue,
-                fuelType: fuelTypeValue,
-                transmission: transmissionValue
-            }),
+    fetch("/api/vehicles/filter", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            type: typeValue,
+            fuelType: fuelTypeValue,
+            transmission: transmissionValue
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && Array.isArray(data.vehicles)) {
+                vehiclesContainer.innerHTML = "";
+                data.vehicles.forEach(vehicle => {
+                    vehiclesContainer.innerHTML += generateVehicleCard(vehicle);
+                });
+            } else {
+                vehiclesContainer.innerHTML = "<p class='text-center col-span-3'>No vehicles found.</p>";
+            }
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && Array.isArray(data.vehicles)) {
-                    vehiclesContainer.innerHTML = "";
-                    data.vehicles.forEach(vehicle => {
-                        vehiclesContainer.innerHTML += generateVehicleCard(vehicle);
-                    });
-                } else {
-                    vehiclesContainer.innerHTML = "<p class='text-center col-span-3'>No vehicles found.</p>";
-                }
-            })
-            .catch(error => console.error("Erreur :", error));
-    } catch (e) {
-        console.error("Erreur :", e);
-    }
+        .catch(error => {
+            console.error("Erreur lors de la récupération des véhicules :", error);
+            vehiclesContainer.innerHTML = "<p class='text-center col-span-3'>An error occurred. Please try again later.</p>";
+        });
 }
 
 function selectType(clickedButton) {
@@ -69,20 +66,16 @@ function selectType(clickedButton) {
     clickedButton.classList.add('bg-purple-600', 'text-white');
     typeValue = clickedButton.dataset.type;
 }
-
 function selectFuelType(clickedButton) {
     fuelTypes.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
     clickedButton.classList.add('bg-purple-600', 'text-white');
     fuelTypeValue = clickedButton.dataset.fueltype;
 }
-
 function selectTransmission(clickedButton) {
     transmissions.forEach(btn => btn.classList.remove('bg-purple-600', 'text-white'));
     clickedButton.classList.add('bg-purple-600', 'text-white');
     transmissionValue = clickedButton.dataset.transmission;
 }
-
-
 types.forEach(type => type.addEventListener('click', () => {
     selectType(type);
     requeteAjax();
@@ -95,31 +88,31 @@ transmissions.forEach(transmission => transmission.addEventListener('click', () 
     selectTransmission(transmission);
     requeteAjax();
 }));
+function applySelectedFilters() {
+    const typeSelect = document.querySelector('#typeSelect').dataset.typeselect;
+    const fuelTypeSelect = document.querySelector('#fuelTypeSelect').dataset.fueltypeselect;
+    const transmissionSelect = document.querySelector('#transmissionSelect').dataset.transmissionselect;
 
-// if filter already select from homePage
-const typeSelect = document.querySelector('#typeSelect').dataset.typeselect;
-const fuelTypeSelect = document.querySelector('#fuelTypeSelect').dataset.fueltypeselect;
-const transmissionSelect = document.querySelector('#transmissionSelect').dataset.transmissionselect;
-
-if (typeSelect !== 'all') {
-    types.forEach(btn => {
-        if (btn.dataset.type === typeSelect) {
-            selectType(btn);
-        }
-    });
+    if (typeSelect !== 'all') {
+        types.forEach(btn => {
+            if (btn.dataset.type === typeSelect) {
+                selectType(btn);
+            }
+        });
+    }
+    if (fuelTypeSelect !== 'all') {
+        fuelTypes.forEach(btn => {
+            if (btn.dataset.fueltype === fuelTypeSelect) {
+                selectFuelType(btn);
+            }
+        });
+    }
+    if (transmissionSelect !== 'all') {
+        transmissions.forEach(btn => {
+            if (btn.dataset.transmission === transmissionSelect) {
+                selectTransmission(btn);
+            }
+        });
+    }
 }
-if (fuelTypeSelect !== 'all') {
-    fuelTypes.forEach(btn => {
-        if (btn.dataset.fueltype === fuelTypeSelect) {
-            selectFuelType(btn);
-        }
-    });
-}
-if (transmissionSelect !== 'all') {
-    transmissions.forEach(btn => {
-        if (btn.dataset.transmission === transmissionSelect) {
-            selectTransmission(btn);
-        }
-    });
-}
-
+applySelectedFilters();
