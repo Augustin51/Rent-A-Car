@@ -9,17 +9,30 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
             <div>
                 <h2 class="text-2xl font-semibold">{{ $vehicle->brand }}</h2>
-                <p class="text-purple-600 text-xl font-bold mt-2">$<span id="price-per-day">{{ $vehicle->price_per_day }} </span><span class="text-sm text-gray-500">/day</span></p>
+                <p class="text-purple-600 text-xl font-bold mt-2">
+                    $<span id="price-per-day">{{ $vehicle->price_per_day }}</span>
+                    <span class="text-sm text-gray-500">/day</span>
+                </p>
 
-                <img src="{{ asset(optional($vehicle->photo[0]->image_url)->first()->image_url ?? 'images/placeholderVehicle.png') }}"
-                     alt="Vehicle Image"
-                     class="w-full h-60 object-contain my-6">
+                @php
+                    $photoPath = $vehicle->photo->first()->image_url ?? null;
+                    $exists = $photoPath && file_exists(public_path($photoPath));
+                    $photoUrl = $exists ? $photoPath : 'images/placeholderVehicle.png';
+                @endphp
 
-                <div class="flex gap-3">
+                <img src="{{ asset($photoUrl) }}"
+                     alt="{{ $vehicle->brand }}"
+                     data-main-image
+                     data-group="vehicle-photos-{{ $vehicle->id }}"
+                     class="rounded-md mb-4 h-72 w-full object-cover">
+
+                <div class="grid grid-cols-4 gap-3">
                     @foreach($vehicle->photo as $photo)
-                        <img src="/storage/{{ $photo->image_url }}"
-                             alt="Vehicle Thumbnail"
-                             class="w-20 h-20 object-cover rounded-md">
+                        <img src="{{ asset($photo->image_url) }}"
+                             alt="{{ $vehicle->brand }}"
+                             data-image-src="{{ asset($photo->image_url) }}"
+                             data-group="vehicle-photos-{{ $vehicle->id }}"
+                             class="w-full h-24 rounded-md object-cover ring-1 ring-gray-200 hover:ring-purple-500 cursor-pointer">
                     @endforeach
                 </div>
             </div>
@@ -41,10 +54,11 @@
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="Email" class="w-full px-4 py-2 border rounded-md text-sm">
                     </div>
-                    <div class="text-sm text-gray-700">Total Price: <strong>${{ $vehicle->price_per_day }} x days</strong></div>
+                    <div class="text-sm text-gray-700">
+                        Total Price: <strong>${{ $vehicle->price_per_day }} x days</strong>
+                    </div>
                     <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-md">Book Now</button>
                 </form>
-
             </div>
         </div>
     </section>
@@ -69,4 +83,5 @@
 @push('scripts')
     <script src="{{ asset('js/flatpickr.js') }}"></script>
     <script src="{{ asset('js/reservation.js') }}"></script>
+    <script src="{{ asset('js/carousel.js') }}"></script>
 @endpush

@@ -19,13 +19,19 @@
                         $photoUrl = $exists ? $photoPath : 'images/placeholderVehicle.png';
                     @endphp
 
-                    <img src="{{ asset($photoUrl) }}" alt="{{ $vehicle->brand }}" class="rounded-md mb-4 h-64 w-full object-cover">
+                    <img src="{{ asset($photoUrl) }}"
+                         alt="{{ $vehicle->brand }}"
+                         data-main-image
+                         data-group="vehicle-photos-{{ $vehicle->id }}"
+                         class="rounded-md mb-4 h-72 w-full object-cover">
 
                     <div class="grid grid-cols-4 gap-3 mt-4">
                         @foreach($vehicle->photo as $photo)
                             <img src="{{ asset($photo->image_url) }}"
                                  alt="{{ $vehicle->brand }}"
-                                 class="w-full h-24 rounded-md object-cover ring-1 ring-gray-200 hover:ring-purple-500">
+                                 data-image-src="{{ asset($photo->image_url) }}"
+                                 data-group="vehicle-photos-{{ $vehicle->id }}"
+                                 class="w-full h-24 rounded-md object-cover ring-1 ring-gray-200 hover:ring-purple-500 cursor-pointer">
                         @endforeach
                     </div>
                 </div>
@@ -136,3 +142,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/carousel.js') }}"></script>
+@endpush

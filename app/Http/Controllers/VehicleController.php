@@ -78,7 +78,8 @@ class VehicleController
     }
 
     public function reservation($id) {
-        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])->find($id);
+        $vehicle = Vehicle::with(['type', 'equipment', 'photo'])
+        ->find($id);
 
         return view('reservation', compact('vehicle'));
     }
