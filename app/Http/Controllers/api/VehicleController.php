@@ -8,6 +8,8 @@ use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReservationConfirmed;
 
 class VehicleController
 {
@@ -112,6 +114,11 @@ class VehicleController
 
             DB::statement('SET foreign_key_checks = 1;');
 
+            Mail::to($email)->send(new ReservationConfirmed(
+                $start_date->format('d/m/Y'),
+                $end_date->format('d/m/Y'),
+                $totalPrice
+            ));
 
             return response()->json([
                 'success' => true,
