@@ -1,11 +1,11 @@
 <div id="fr">
 
-<details open>
+<details>
 <summary><strong>🇫🇷 Français</strong></summary>
 
 <br>
-# 🚗 RentACar
 
+# 🚗 RentACar
 
 RentACar est une application web développée avec **Laravel 12.9.0** et **Tailwind CSS**, qui permet aux utilisateurs de consulter une liste de véhicules, de filtrer par catégorie et de réserver un véhicule en quelques clics.
 
